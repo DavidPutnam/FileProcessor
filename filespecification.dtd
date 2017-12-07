@@ -1,0 +1,23 @@
+<!ELEMENT File (Record*)>
+<!ATTLIST File
+          type (fixed|deliminated) #REQUIRED
+          idBegin CDATA #IMPLIED
+          idLength CDATA #IMPLIED
+          idField CDATA #IMPLIED
+          deliminator CDATA #IMPLIED>
+<!ELEMENT Record (Attribute*)>
+<!ATTLIST Record
+          id CDATA #REQUIRED
+          firstOfSet (true|false) #IMPLIED
+          required (true|false) #IMPLIED
+          targetClassName CDATA #IMPLIED
+          sameAs CDATA #IMPLIED>
+<!ELEMENT Attribute EMPTY>
+<!ATTLIST Attribute
+          name CDATA #REQUIRED
+          format CDATA #IMPLIED
+          begin CDATA #IMPLIED
+          length CDATA #IMPLIED
+          sublength CDATA #IMPLIED
+          field CDATA #IMPLIED
+          subdelim CDATA #IMPLIED>

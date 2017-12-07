@@ -1,0 +1,147 @@
+<project name="FileProcessor" default="all">
+
+    <!--
+       Define project variables
+    -->
+    <property environment="env"/>
+    <!-- set global properties for this build -->
+    <!-- if the properties were set by the environment these assignments aren't effective -->
+    <property name="env.BUILD_TAG" value="local_DEV"/>
+    <property name="env.LIB_ROOT" value="I:\Lib"/>
+
+    <!-- <property name="projdir" value="${env.PROJ_ROOT}/${env.PROJ_NAME}"/> -->
+    <!-- convert from fully qualified to relative pathnames -->
+    <property name="srcdir" value="./src"/>
+    <property name="testdir" value="./test"/>
+    <property name="libdir" value="./lib"/>
+    <property name="builddir" value="./build"/>
+    <property name="classdir" value="${builddir}/classes"/>
+    <property name="testclasses" value="${builddir}/testclasses"/>
+    <property name="testresults" value="${builddir}/testresults"/>
+    <property name="distdir" value="${builddir}/dist"/>
+    <property name="disttitle" value="${ant.project.name}"/>
+    <property name="distversion" value="${env.BUILD_TAG}"/>
+    <property name="sharedlibdir" value="${env.LIB_ROOT}"/>
+
+    <!--
+        Define the class path for the compile step
+    -->
+    <path id="project.class.path">
+        <!-- Include compiled classes -->
+        <pathelement path="${classdir}"/>
+
+        <!-- Include JARs in the project lib directory -->
+        <fileset dir="${libdir}" includes="*.jar"/>
+
+        <!-- Include JARs in the global lib directory -->
+        <fileset dir="${sharedlibdir}/commons-lang-2.5" includes="commons-lang-2.5.jar"/>
+        <fileset dir="${sharedlibdir}/apache-log4j-1.2.16" includes="log4j-1.2.16.jar"/>
+    </path>
+
+    <!--
+       Target to clean the output directories
+    -->
+    <target name="clean">
+        <delete dir="${classdir}"/>
+        <delete dir="${testclasses}"/>
+        <delete dir="${testresults}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <tstamp/>
+        <mkdir dir="${classdir}"/>
+        <mkdir dir="${testclasses}"/>
+        <mkdir dir="${testresults}"/>
+        <delete dir="${distdir}"/>
+        <mkdir dir="${distdir}"/>
+    </target>
+
+
+    <!--
+       Target to compile all of the classes
+    -->
+    <target name="compile" depends="init">
+        <!-- compile all of the classes in the src directory and write them to
+     the classes directory -->
+        <javac srcdir="${srcdir}" destdir="${classdir}" debug="on">
+            <!-- use the classpath defined previously -->
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
+
+    <target name="testcompile" depends="compile">
+        <!-- compile all of the classes in the src directory and write them to
+     the classes directory -->
+        <javac srcdir="${testdir}" destdir="${testclasses}" debug="on">
+            <!-- use the classpath defined previously -->
+            <classpath>
+                <path refid="project.class.path"/>
+                <fileset dir="${sharedlibdir}/junit-4.8.2" includes="junit-4.8.2.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!--
+       Target to run all unit tests
+    -->
+    <target name="unittests" depends="testcompile">
+        <junit printsummary="yes" fork="yes" haltonfailure="no" failureproperty="testfailed">
+            <classpath>
+                <path refid="project.class.path"/>
+                <pathelement path="${testclasses}"/>
+                <fileset dir="${sharedlibdir}/junit-4.8.2" includes="junit-4.8.2.jar"/>
+            </classpath>
+            <formatter type="plain"/>
+            <batchtest fork="false" todir="${testresults}">
+                <fileset dir="${testdir}">
+                    <include name="**/Test*.java"/>
+                    <exclude name="**/Testing*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <!--
+       Target to build the JAR file
+    -->
+    <target name="thejar" depends="compile,unittests" unless="testfailed">
+        <jar jarfile="${distdir}/${disttitle}-${distversion}.jar" compress="false">
+            <!-- Include all classes in the class output directory -->
+            <fileset dir="${classdir}">
+                <exclude name="package cache/**"/>
+            </fileset>
+
+            <!--
+               Include resources from the source directory
+            -->
+            <fileset dir="${srcdir}">
+                <!-- Include all .xml files -->
+                <include name="*.xml"/>
+                <!-- Add include tags for other resources - .gif, .jpg, .xsl, etc. -->
+            </fileset>
+
+
+            <!--
+               Set some attributes in the manifest
+            -->
+            <manifest>
+                <!-- Specifies the class containing the main() method -->
+                <attribute name="Main-Class" value="org.putnamfamily.fileprocessor.FileProcessorMain"/>
+
+                <!-- Specified the build number for the application -->
+                <attribute name="Specification-Version" value="${distversion}"/>
+                <attribute name="Specification-Title" value="${disttitle}"/>
+                <attribute name="Specification-Vendor" value="Putnam Family"/>
+                <attribute name="Implementation-Version" value="${distversion}"/>
+                <attribute name="Implementation-Title" value="${disttitle}"/>
+                <attribute name="Implementation-Vendor" value="Putnam Family"/>
+                <attribute name="Built-By" value="${user.name}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!--
+       This target is a shortcut to rebuild everything
+    -->
+    <target name="all" depends="thejar"/>
+</project>

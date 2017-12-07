@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE File SYSTEM "filespecification.dtd">
+<File type="fixed" idBegin="1" idLength="10">
+    <Record id="0000000000" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.nwd22c2.Header">
+        <Attribute begin="1" length="10" name="recordType"/>
+        <Attribute begin="11" length="8" name="cycleDate" format="yyyyMMdd"/>
+        <Attribute begin="19" length="8" name="createDate" format="yyyyMMdd"/>
+        <Attribute begin="27" length="7" name="company"/>
+        <Attribute begin="34" length="667" name="filler"/>
+    </Record>
+    <Record id="9999999999" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.nwd22c2.Trailer">
+        <Attribute begin="1" length="10" name="recordType"/>
+        <Attribute begin="11" length="10" name="recordCount"/>
+        <Attribute begin="21" length="16" name="amountTotal" format="2"/>
+        <Attribute begin="37" length="664" name="filler"/>
+    </Record>
+    <Record id="?" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.nwd22c2.Price">
+        <Attribute begin="1" length="10" name="recordType"/>
+        <Attribute begin="4" length="15" name="fundCusipNumber"/>
+        <Attribute begin="19" length="5" name="paFundNbr"/>
+        <Attribute begin="24" length="8" name="tradeDate" format="yyyyMMdd"/>
+        <Attribute begin="32" length="17" name="price"/>
+        <Attribute begin="49" length="3" name="cycle"/>
+        <Attribute begin="52" length="13" name="factor"/>
+        <Attribute begin="65" length="1" name="days"/>
+    </Record>
+    <Record id="?" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.nwd22c2.Transaction">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="15" name="fundCusipNumber"/>
+        <Attribute begin="19" length="5" name="paFundNbr"/>
+        <Attribute begin="24" length="8" name="tradeDate" format="yyyyMMdd"/>
+        <Attribute begin="32" length="17" name="price"/>
+        <Attribute begin="49" length="3" name="cycle"/>
+        <Attribute begin="52" length="13" name="factor"/>
+        <Attribute begin="65" length="1" name="days"/>
+    </Record>
+</File>

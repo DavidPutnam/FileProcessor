@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE File SYSTEM "filespecification.dtd">
+<File type="fixed" idBegin="2" idLength="4">
+    <!-- The id includes both the recordType and sequenceNumber but not the originatorType for each record -->
+    <Record id="2001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dtcc_sdr.Request">
+        <Attribute begin="1" length="1" name="originatorType"/>
+        <Attribute begin="2" length="2" name="recordType"/>
+        <Attribute begin="4" length="2" name="sequenceNumber"/>
+        <Attribute begin="6" length="15" name="sdrControlNumber"/>
+        <Attribute begin="21" length="4" name="firmNumber"/>
+        <Attribute begin="25" length="4" name="fundNumber"/>
+        <Attribute begin="29" length="9" name="securityIssueId"/>
+        <Attribute begin="38" length="4" name="underlyingFirmNumber"/>
+        <Attribute begin="42" length="2" name="underlyingFirmIndicator"/>
+        <Attribute begin="44" length="20" name="fundAccountNumber"/>
+        <Attribute begin="64" length="20" name="firmAccountNumber"/>
+        <Attribute begin="84" length="15" name="fundServControlNumber"/>
+        <Attribute begin="99" length="2" name="sdrRequestType"/>
+        <Attribute begin="101" length="8" name="fromDate" format="MMddyyyy"/>
+        <Attribute begin="109" length="9" name="tin"/>
+        <Attribute begin="118" length="24" name="filler1"/>
+        <Attribute begin="142" length="1" name="nsccRejectIndicator"/>
+        <Attribute begin="143" length="2" name="nsccRejectCode1"/>
+        <Attribute begin="145" length="2" name="nsccRejectCode2"/>
+        <Attribute begin="147" length="2" name="nsccRejectCode3"/>
+        <Attribute begin="149" length="2" name="nsccRejectCode4"/>
+    </Record>
+    <Record id="2002" firstOfSet="false" required="true" targetClassName="org.putnamfamily.fileprocessor.dtcc_sdr.Request">
+        <Attribute begin="1" length="1" name="originatorType"/>
+        <Attribute begin="2" length="2" name="recordType"/>
+        <Attribute begin="4" length="2" name="sequenceNumber"/>
+        <Attribute begin="6" length="20" name="omnibusAccountNumber"/>
+        <Attribute begin="26" length="1" name="omnibusAccountIndicator"/>
+        <Attribute begin="27" length="1" name="recuringIndicator"/>
+        <Attribute begin="28" length="8" name="toDate" format="MMddyyyy"/>
+        <Attribute begin="36" length="1" name="category2Indicator"/>
+        <Attribute begin="37" length="9" name="rrRep"/>
+        <Attribute begin="46" length="9" name="rrBranch"/>
+        <Attribute begin="55" length="8" name="rrFirm"/>
+        <Attribute begin="63" length="15" name="originalSdrControlNumber"/>
+        <Attribute begin="78" length="9" name="thresholdAmount"/>
+        <Attribute begin="87" length="2" name="transactionType"/>
+        <Attribute begin="89" length="62" name="filler2"/>
+    </Record>
+    <Record id="2101" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dtcc_sdr.Header">
+        <Attribute begin="1" length="1" name="originatorType"/>
+        <Attribute begin="2" length="2" name="recordType"/>
+        <Attribute begin="4" length="2" name="sequenceNumber"/>
+        <Attribute begin="6" length="15" name="sdrControlNumber"/>
+        <Attribute begin="21" length="4" name="firmNumber"/>
+        <Attribute begin="25" length="4" name="fundNumber"/>
+        <Attribute begin="29" length="9" name="securityIssueId"/>
+        <Attribute begin="38" length="4" name="underlyingFirmNumber"/>
+        <Attribute begin="42" length="2" name="underlyingFirmIndicator"/>
+        <Attribute begin="44" length="20" name="fundAccountNumber"/>
+        <Attribute begin="64" length="20" name="firmAccountNumber"/>
+        <Attribute begin="84" length="15" name="fundServControlNumber"/>
+        <Attribute begin="99" length="2" name="responseType"/>
+        <Attribute begin="101" length="15" name="sdrResponseNumber"/>
+        <Attribute begin="116" length="1" name="partialResponseIndicator"/>
+        <Attribute begin="117" length="1" name="correctionIndicator"/>
+        <Attribute begin="118" length="24" name="filler1"/>
+        <Attribute begin="142" length="1" name="nsccRejectIndicator"/>
+        <Attribute begin="143" length="2" name="nsccRejectCode1"/>
+        <Attribute begin="145" length="2" name="nsccRejectCode2"/>
+        <Attribute begin="147" length="2" name="nsccRejectCode3"/>
+        <Attribute begin="149" length="2" name="nsccRejectCode4"/>
+    </Record>
+</File>

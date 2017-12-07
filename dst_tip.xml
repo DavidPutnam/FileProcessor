@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE File SYSTEM "filespecification.dtd">
+<File type="fixed" idBegin="1" idLength="6">
+    <!-- The id includes both the recordType and sequenceNumber for each record -->
+    <Record id="RHR001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Header">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+        <Attribute begin="7" length="15" name="fileType"/>
+        <Attribute begin="22" length="8" name="superSheetDate" format="yyyyMMdd"/>
+        <Attribute begin="30" length="16" name="processedDate" format="yyyyMMddHHmmssdd"/>
+        <Attribute begin="46" length="8" name="jobName"/>
+        <Attribute begin="54" length="3" name="fileFormatCode"/>
+        <Attribute begin="57" length="7" name="requestNumber"/>
+        <Attribute begin="64" length="97" name="unused1"/>
+    </Record>
+    <Record id="RTR001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Trailer">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+        <Attribute begin="7" length="15" name="fileType"/>
+        <Attribute begin="22" length="9" name="recordCount"/>
+        <Attribute begin="31" length="130" name="unused1"/>
+    </Record>
+    <Record id="AMP001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Account">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+    </Record>
+    <Record id="NFA001" sameAs="AMP001"/>
+    <Record id="NAA001" sameAs="AMP001"/>
+    <Record id="AMP002" firstOfSet="false" required="false" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Account">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+    </Record>
+    <Record id="NFA002" sameAs="AMP002"/>
+    <Record id="NAA002" sameAs="AMP002"/>
+    <Record id="PRI001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Price">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+   	</Record>
+    <Record id="TRN001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Transaction">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+   	</Record>
+    <Record id="TRN002" firstOfSet="false" required="false" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Transaction">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+    </Record>
+</File>

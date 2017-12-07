@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE File SYSTEM "filespecification.dtd">
+<File type="fixed" idBegin="1" idLength="1">
+    <!-- The id includes both the recordType and sequenceNumber for each record -->
+    <Record id="0" firstOfSet="true" targetClassName="org.putnamfamily.fileprocessor.poweragent.Header">
+        <Attribute begin="1" length="1" name="recordType"/>
+        <Attribute begin="2" length="17" name="createDateTime" format="yyyyMMdd HH:mm:ss"/>
+        <Attribute begin="19" length="50" name="fundGroupName"/>
+        <Attribute begin="69" length="10" name="version"/>
+    </Record>
+    <Record id="9" firstOfSet="true" targetClassName="org.putnamfamily.fileprocessor.poweragent.Trailer">
+        <Attribute begin="1" length="1" name="recordType"/>
+        <Attribute begin="2" length="17" name="endDateTime" format="yyyyMMdd HH:mm:ss"/>
+        <Attribute begin="19" length="16" name="recordCount"/>
+    </Record>
+    <Record id="PRI" firstOfSet="true" targetClassName="org.putnamfamily.fileprocessor.poweragent.Price">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="15" name="fundCusipNumber"/>
+        <Attribute begin="19" length="5" name="paFundNbr"/>
+        <Attribute begin="24" length="8" name="tradeDate" format="yyyyMMdd"/>
+        <Attribute begin="32" length="17" name="price"/>
+        <Attribute begin="49" length="3" name="cycle"/>
+        <Attribute begin="52" length="13" name="factor"/>
+        <Attribute begin="65" length="1" name="days"/>
+    </Record>
+</File>

@@ -1,0 +1,20 @@
+<project name="Project" default="cc-build" basedir=".">
+    <property name="base.dir" value="."/>
+
+    <property environment="env"/>
+    <!-- set global properties for this build -->
+    <!-- if the properties were set by the environment these assignments aren't effective -->
+    <property name="env.BUILD_TAG" value="HEAD"/>
+    <property name="env.LIB_ROOT" value="/home/david/projects/SharedLibs"/>
+    <property name="JAVA_HOME" value="/usr/java/jdk1.6.0_07/"/>
+
+    <target name="cc-build" depends="update-src" description="Cruise Control Build">
+        <ant antfile="build.xml" target="all"/>
+    </target>
+    <target name="update-src">
+        <echo>Updating source from Subversion</echo>
+        <exec executable="svn" dir="${base.dir}">
+            <arg line="up"/>
+        </exec>
+    </target>
+</project>
