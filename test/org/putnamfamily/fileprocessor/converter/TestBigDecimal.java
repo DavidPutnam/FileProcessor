@@ -42,7 +42,7 @@ public class TestBigDecimal {
         try {
             String original = "12345";
             String format = "000V00";
-            // we need to use the string constructor because doubles are not presise
+            // we need to use the string constructor because doubles are not precise
             BigDecimal expected = new BigDecimal("123.45");
             Converter converter = ConverterFactory.getInstance().create(testClass, format);
             Object received = converter.read(original);

@@ -22,21 +22,41 @@ import org.apache.logging.log4j.Logger;
  */
 public final class ConverterFactory {
     private static final Logger LOGGER = LogManager.getLogger(ConverterFactory.class);
-    private static final ConverterFactory ourInstance = new ConverterFactory();
+    private static volatile ConverterFactory ourInstance;
     private static Map<Class<?>, Class<? extends BaseConverter>> converterMap = null;
 
-    private ConverterFactory() {
+    public static ConverterFactory getInstance() {
+        //Double check locking pattern
+        if (ourInstance == null) { //Check for the first time
+
+            synchronized (ConverterFactory.class) { //Check for the second time.
+                //if there is no instance available... create new one
+                if (ourInstance == null) {
+                    ourInstance = new ConverterFactory();
+                    //ourInstance.initializeMap();
+                }
+            }
+        }
+
+        return ourInstance;
     }
 
-    public static ConverterFactory getInstance() {
-        return ourInstance;
+    private ConverterFactory() {
+        if (ourInstance != null) {
+            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+        }
+    }
+
+    //Make singleton from serialize and deserialize operation.
+    protected ConverterFactory readResolve() {
+        return getInstance();
     }
 
     private synchronized void initializeMap() throws ConverterException {
         if (converterMap == null) {
             converterMap = new HashMap<Class<?>, Class<? extends BaseConverter>>(20);
             // To support any new type simply write the converter, extending BaseConverter,
-            // and add to this map.
+            // and add to this map by registering them.
 
             // These represent primitive types
             register(Boolean.TYPE, ConvertBoolean.class);
