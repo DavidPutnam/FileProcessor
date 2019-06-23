@@ -20,6 +20,7 @@ final class ConvertBoolean extends BaseConverter {
     public Boolean read(final String field) throws ConverterException {
         LOGGER.trace("ConvertBoolean.read");
         if (field == null || "".equals(field.trim())) {
+            // returning null could cause NPE if auto unboxing to boolean
             return null;
         } else {
             return Boolean.valueOf(field);

@@ -32,9 +32,54 @@
     </Record>
     <Record id="NFA002" sameAs="AMP002"/>
     <Record id="NAA002" sameAs="AMP002"/>
-    <Record id="PRI001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Price">
+    <Record id="FPR001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Price">
         <Attribute begin="1" length="3" name="recordType"/>
         <Attribute begin="4" length="3" name="sequenceNumber"/>
+        <Attribute begin="7" length="7" name="nsccDealer"/>
+        <Attribute begin="14" length="9" name="nsccBranch"/>
+        <Attribute begin="23" length="4" name="transferAgentId"/>
+        <Attribute begin="27" length="9" name="cusip"/>
+        <Attribute begin="36" length="7" name="fundCode"/>
+        <Attribute begin="43" length="8" name="priceDate" format="yyyyMMdd"/>
+        <Attribute begin="51" length="8" name="lastMaintTime" format="HHmmssdd"/>
+        <Attribute begin="59" length="9" name="nav" format="0V0000"/>
+        <Attribute begin="68" length="9" name="offerPrice" format="0V0000"/>
+        <Attribute begin="77" length="1" name="statusCode"/>
+        <Attribute begin="78" length="11" name="dailyDividendRate" format="0V000000000"/>
+        <Attribute begin="89" length="38" name="fundName"/>
+        <Attribute begin="127" length="4" name="shareClass"/>
+        <Attribute begin="131" length="30" name="unused1"/>
+   	</Record>
+    <Record id="DDR001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.DivRate">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+        <Attribute begin="7" length="7" name="nsccDealer"/>
+        <Attribute begin="14" length="9" name="nsccBranch"/>
+        <Attribute begin="23" length="4" name="transferAgentId"/>
+        <Attribute begin="27" length="9" name="cusip"/>
+        <Attribute begin="36" length="7" name="fundCode"/>
+        <Attribute begin="43" length="8" name="processDate" format="yyyyMMdd"/>
+        <Attribute begin="51" length="8" name="dividendRateDate" format="yyyyMMdd"/>
+        <Attribute begin="59" length="11" name="dailyDividendRate" format="0V000000000"/>
+        <Attribute begin="70" length="11" name="dailyExpenseRate" format="0V000000000"/>
+        <Attribute begin="81" length="80" name="unused1"/>
+   	</Record>
+    <Record id="FYR001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.FundYield">
+        <Attribute begin="1" length="3" name="recordType"/>
+        <Attribute begin="4" length="3" name="sequenceNumber"/>
+        <Attribute begin="7" length="7" name="nsccDealer"/>
+        <Attribute begin="14" length="9" name="nsccBranch"/>
+        <Attribute begin="23" length="4" name="transferAgentId"/>
+        <Attribute begin="27" length="9" name="cusip"/>
+        <Attribute begin="36" length="7" name="fundCode"/>
+        <Attribute begin="43" length="8" name="processDate" format="yyyyMMdd"/>
+        <Attribute begin="51" length="8" name="dividendDate" format="yyyyMMdd"/>
+        <Attribute begin="59" length="5" name="dailyYieldQuotient" format="0V00"/>
+        <Attribute begin="64" length="5" name="monthlyYieldQuotient" format="0V00"/>
+        <Attribute begin="69" length="5" name="yearlyYieldQuotient" format="0V00"/>
+        <Attribute begin="74" length="5" name="currentWeeklyYield" format="0V00"/>
+        <Attribute begin="79" length="5" name="sec30DayYield" format="0V00"/>
+        <Attribute begin="84" length="77" name="unused1"/>
    	</Record>
     <Record id="TRN001" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.dst_tip.Transaction">
         <Attribute begin="1" length="3" name="recordType"/>
