@@ -5,6 +5,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
 import org.junit.Test;
 
 /**
@@ -12,12 +20,12 @@ import org.junit.Test;
  * User: david
  * Date: Sep 27, 2006
  * Time: 7:45:28 PM
- * File id: $Id: TestFactory.java 13 2008-01-25 03:28:07Z david $
+ * File id: $Id: TestConverterFactory.java 13 2008-01-25 03:28:07Z david $
  *
  * @author $Author: david $
  * @version $Revision: 13 $
  */
-public class TestFactory {
+public class TestConverterFactory {
 
     @Test
     public void testTypeNull() {
@@ -66,12 +74,34 @@ public class TestFactory {
     }
 
     @Test
-    public void testRegister() {
+    public void testRegisterGood() {
         ConverterFactory ef = ConverterFactory.getInstance();
         try {
             ef.register(Class.class, BaseConverter.class);
         } catch (ConverterException ex) {
             fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterNoClass() {
+        ConverterFactory ef = ConverterFactory.getInstance();
+        try {
+            ef.register(null, BaseConverter.class);
+        } catch (ConverterException ex) {
+            assertTrue(ex.getMessage(),
+                ex.getMessage().startsWith("Must provide both the class and converter to register."));
+        }
+    }
+
+    @Test
+    public void testRegisterNoConverter() {
+        ConverterFactory ef = ConverterFactory.getInstance();
+        try {
+            ef.register(Class.class, null);
+        } catch (ConverterException ex) {
+            assertTrue(ex.getMessage(),
+                ex.getMessage().startsWith("Must provide both the class and converter to register."));
         }
     }
 
@@ -107,7 +137,7 @@ public class TestFactory {
     }
 
     @Test
-    public void testPrivatedconverter() {
+    public void testPrivateconverter() {
         ConverterFactory ef = ConverterFactory.getInstance();
         try {
             ef.register(Class.class, PrivateConverter.class);
@@ -142,5 +172,26 @@ public class TestFactory {
         } catch (IllegalArgumentException ex) {
             fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void testSerialization() {
+        try {
+            ConverterFactory instance1 = ConverterFactory.getInstance();
+            ObjectOutput out = null;
+            out = new ObjectOutputStream(new FileOutputStream("filename.ser"));
+            out.writeObject(instance1);
+            out.close();
+
+            //de-serialize from file to object
+            ObjectInput in = new ObjectInputStream(new FileInputStream("filename.ser"));
+            ConverterFactory instance2 = (ConverterFactory) in.readObject();
+            in.close();
+
+            assertEquals("Created a duplicate instance", instance1.hashCode(), instance2.hashCode());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }
