@@ -24,9 +24,9 @@ final class ConvertFloat extends DecimalConverter {
         LOGGER.trace("ConvertFload.readImpl");
         Float returnValue = null;
         if (value instanceof Long) {
-            returnValue = new Float(((Long) value).floatValue());
+            returnValue = ((Long) value).floatValue();
         } else if (value instanceof Double) {
-            returnValue = new Float(((Double) value).floatValue());
+            returnValue = ((Double) value).floatValue();
         }
         return returnValue;
     }

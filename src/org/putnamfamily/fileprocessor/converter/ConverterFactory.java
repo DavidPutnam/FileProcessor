@@ -1,6 +1,7 @@
 
 package org.putnamfamily.fileprocessor.converter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -127,10 +128,18 @@ public final class ConverterFactory {
         // create a new converter
         BaseConverter converter;
         try {
-            converter = (BaseConverter) converterClazz.newInstance();
+            converter = (BaseConverter) converterClazz.getDeclaredConstructor().newInstance();
         } catch (InstantiationException ex) {
             throw new ConverterException("Unable to create converter: " + converterClazz.getName() + ".", ex);
         } catch (IllegalAccessException ex) {
+            throw new ConverterException("Unable to access converter: " + converterClazz.getName() + ".", ex);
+        } catch (IllegalArgumentException ex) {
+            throw new ConverterException("No zero arg constructor for converter: " + converterClazz.getName() + ".", ex);
+        } catch (InvocationTargetException ex) {
+            throw new ConverterException("No constructor for converter: " + converterClazz.getName() + ".", ex);
+        } catch (NoSuchMethodException ex) {
+            throw new ConverterException("Unable to access converter: " + converterClazz.getName() + ".", ex);
+        } catch (SecurityException ex) {
             throw new ConverterException("Unable to access converter: " + converterClazz.getName() + ".", ex);
         }
 

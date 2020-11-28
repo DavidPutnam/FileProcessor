@@ -41,7 +41,7 @@ public class TestFloat {
             String original = "12345";
             String format = "0V00";
             // we need to use the string constructor because doubles are not presise
-            Float expected = new Float("123.45");
+            Float expected = 123.45f;
             Converter converter = ConverterFactory.getInstance().create(testClass, format);
             Object received = converter.read(original);
             assertEquals(expected, received);
@@ -164,7 +164,7 @@ public class TestFloat {
     public void testWriteValidImpliedDecimal() {
         try {
             // we need to use the string constructor because doubles are not presise
-            Float original = new Float("123.45");
+            Float original = 123.45f;
             String format = "0V00";
             String expected = "12345";
             Converter converter = ConverterFactory.getInstance().create(testClass, format);

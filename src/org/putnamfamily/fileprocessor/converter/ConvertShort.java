@@ -24,7 +24,7 @@ final class ConvertShort extends IntegerConverter {
         LOGGER.trace("ConvertShort.readImpl");
         Short returnValue = null;
         if (value instanceof Long) {
-            returnValue = new Short(((Long) value).shortValue());
+            returnValue = ((Long) value).shortValue();
         }
         return returnValue;
     }

@@ -24,7 +24,7 @@ final class ConvertDouble extends DecimalConverter {
         LOGGER.trace("ConvertDouble.readImpl");
         Double returnValue = null;
         if (value instanceof Long) {
-            returnValue = new Double(((Long) value).doubleValue());
+            returnValue = Double.valueOf((Long) value);
         } else if (value instanceof Double) {
             returnValue = (Double) value;
         }

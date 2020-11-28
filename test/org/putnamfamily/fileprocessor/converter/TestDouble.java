@@ -40,8 +40,7 @@ public class TestDouble {
         try {
             String original = "12345";
             String format = "#0V00";
-            // we need to use the string constructor because doubles are not presise
-            Double expected = new Double("123.45");
+            Double expected = 123.45d;
             Converter converter = ConverterFactory.getInstance().create(testClass, format);
             Object received = converter.read(original);
             assertEquals(expected, received);
@@ -158,8 +157,8 @@ public class TestDouble {
 
     public void testWriteValidImpliedDecimal() {
         try {
-            // we need to use the string constructor because doubles are not presise
-            Double original = new Double("123.45");
+            // we need to use the string constructor because doubles are not precise
+            Double original = 123.45;
             String format = "#0V00";
             String expected = "12345";
             Converter converter = ConverterFactory.getInstance().create(testClass, format);

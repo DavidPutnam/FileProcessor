@@ -24,7 +24,7 @@ final class ConvertInteger extends IntegerConverter {
         LOGGER.trace("ConvertInteger.readImpl");
         Integer returnValue = null;
         if (value instanceof Long) {
-            returnValue = new Integer(((Long) value).intValue());
+            returnValue = ((Long) value).intValue();
         }
         return returnValue;
     }

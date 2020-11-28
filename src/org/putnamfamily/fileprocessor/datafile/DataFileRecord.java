@@ -1,6 +1,7 @@
 
 package org.putnamfamily.fileprocessor.datafile;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,10 +70,18 @@ final class DataFileRecord {
 
         Object target;
         try {
-            target = targetClass.newInstance();
+            target = targetClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException ex) {
             throw new FileParserException("Unable to create " + targetClass.getName(), ex);
         } catch (IllegalAccessException ex) {
+            throw new FileParserException("Unable to create " + targetClass.getName(), ex);
+        } catch (IllegalArgumentException ex) {
+            throw new FileParserException("Unable to create " + targetClass.getName(), ex);
+        } catch (InvocationTargetException ex) {
+            throw new FileParserException("Unable to create " + targetClass.getName(), ex);
+        } catch (NoSuchMethodException ex) {
+            throw new FileParserException("Unable to create " + targetClass.getName(), ex);
+        } catch (SecurityException ex) {
             throw new FileParserException("Unable to create " + targetClass.getName(), ex);
         }
         return target;
