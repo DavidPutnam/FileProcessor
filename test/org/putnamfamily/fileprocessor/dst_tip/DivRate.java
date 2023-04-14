@@ -1,8 +1,10 @@
 
 package org.putnamfamily.fileprocessor.dst_tip;
 
-public class Transaction extends DstTipBaseRecord {
+public class DivRate extends DstTipBaseRecord {
     //rrrsss
-    //TRN001
+    //FPR001
+    // records FPR
     //private static final Logger LOGGER = LogManager.getLogger();
+
 }

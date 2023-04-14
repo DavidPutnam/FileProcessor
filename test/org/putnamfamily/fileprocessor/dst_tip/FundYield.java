@@ -1,8 +1,9 @@
 
 package org.putnamfamily.fileprocessor.dst_tip;
 
-public class Transaction extends DstTipBaseRecord {
+public class FundYield extends DstTipBaseRecord {
     //rrrsss
-    //TRN001
+    //FYR001
     //private static final Logger LOGGER = LogManager.getLogger();
+
 }

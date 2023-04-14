@@ -11,30 +11,12 @@ package org.putnamfamily.fileprocessor.dst_tip;
  * @author $Author: david $
  * @version $Revision: 12 $
  */
-public class Trailer {
+public class Trailer extends DstTipBaseRecord {
     //rrrssstttttttttttttttccccccccc
     //RTR001ACCT ACTIVITY  000000002
     //private static final Logger LOGGER = LogManager.getLogger();
-    private String recordType;
-    private String sequenceNumber;
     private String fileType;
     private int recordCount;
-
-    public String getRecordType() {
-        return recordType;
-    }
-
-    public void setRecordType(String recordType) {
-        this.recordType = recordType;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
 
     public String getFileType() {
         return fileType;

@@ -11,25 +11,9 @@ package org.putnamfamily.fileprocessor.dst_tip;
  * @author $Author: david $
  * @version $Revision: 12 $
  */
-public class Account {
+public class Account extends DstTipBaseRecord {
+    //rrrsss
+    //AMP001
     // records AMP, NFP, NAA etc.
     //private static final Logger LOGGER = LogManager.getLogger();
-    private String recordType;
-    private String sequenceNumber;
-
-    public String getRecordType() {
-        return recordType;
-    }
-
-    public void setRecordType(String recordType) {
-        this.recordType = recordType;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
 }

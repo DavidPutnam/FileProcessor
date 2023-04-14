@@ -13,34 +13,16 @@ import java.util.Date;
  * @author $Author: david $
  * @version $Revision: 12 $
  */
-public class Header {
+public class Header extends DstTipBaseRecord {
     //rrrssstttttttttttttttssssssssppppppppppppppppjjjjjjjjfffqqqqqqq
     //RHR001ACCT ACTIVITY  200601102006011022153866UBDMU1380130000003
     //private static final Logger LOGGER = LogManager.getLogger();
-    private String recordType;
-    private String sequenceNumber;
     private String fileType;
     private Date superSheetDate;
     private Date processedDate;
     private String jobName;
     private String fileFormatCode;
     private String requestNumber;
-
-    public String getRecordType() {
-        return recordType;
-    }
-
-    public void setRecordType(String recordType) {
-        this.recordType = recordType;
-    }
-
-    public String getSequenceNumber() {
-        return sequenceNumber;
-    }
-
-    public void setSequenceNumber(String sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
 
     public String getFileType() {
         return fileType;

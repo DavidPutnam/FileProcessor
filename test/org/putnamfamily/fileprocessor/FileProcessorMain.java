@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.putnamfamily.fileprocessor.datafile.DataFileParser;
 import org.putnamfamily.fileprocessor.datafile.FileDefinitionFactory;
 import org.putnamfamily.fileprocessor.datafile.FileParserException;
-import org.putnamfamily.fileprocessor.datafile.DataFileParser;
 
 /**
  * Created by IntelliJ IDEA.
@@ -65,6 +65,10 @@ public class FileProcessorMain {
 
         // VM argument -Dlog4j.configurationFile=log4j-config.xml
 
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Invalid number of arguments.");
+        }
+
         // open the file that needs to be loaded.
         BufferedReader reader;
         try {
@@ -86,9 +90,8 @@ public class FileProcessorMain {
         // create a thread pool with a fixed size and a blocking queue. To throttle the amount
         // of data being pushed through the system make the caller run a process if the pool
         // is busy and the queue is full.
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(CORE_THREAD_POOL_SIZE, MAX_THREAD_POOL_SIZE,
-            THREAD_POOL_WAIT, TimeUnit.SECONDS,
-            new ArrayBlockingQueue<Runnable>(MAX_THREAD_POOL_SIZE * QUEUE_LENGTH_FACTOR));
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(CORE_THREAD_POOL_SIZE, MAX_THREAD_POOL_SIZE, THREAD_POOL_WAIT,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(MAX_THREAD_POOL_SIZE * QUEUE_LENGTH_FACTOR));
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtHandlerImpl());
         application.setExecuteQueue(executor);
@@ -127,9 +130,8 @@ public class FileProcessorMain {
                 getParser().assignAttributes(target, line);
             } catch (FileParserException ex) {
                 // if there is an error, the record is unknown, log it and continue.
-                LOGGER.error("Error on line " + recNum + " beginning with: '"
-                        + line.substring(0, Math.min(20, line.length())) + "'.",
-                    ex);
+                LOGGER.error(
+                    "Error on line " + recNum + " beginning with: '" + line.substring(0, Math.min(20, line.length())) + "'.", ex);
             }
 
             // get the next line

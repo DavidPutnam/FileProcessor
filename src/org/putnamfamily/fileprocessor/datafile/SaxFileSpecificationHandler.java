@@ -25,7 +25,7 @@ final class SaxFileSpecificationHandler extends DefaultHandler {
     private static final String IDLENGTH = "idLength";
     private static final String IDFIELD = "idField";
     private static final String DELIMINATOR = "deliminator";
-    private static final String RECORD = "DataFileRecord";
+    private static final String RECORD = "Record";
     private static final String ID = "id";
     private static final String FIRSTOFSET = "firstOfSet";
     private static final String REQUIRED = "required";
@@ -72,8 +72,7 @@ final class SaxFileSpecificationHandler extends DefaultHandler {
      *                                  wrapping another exception.
      * @see org.xml.sax.ContentHandler#startElement
      */
-    public void startElement(final String uri, final String lName, final String qName, final Attributes attrs)
-            throws SAXException {
+    public void startElement(final String uri, final String lName, final String qName, final Attributes attrs) throws SAXException {
         super.startElement(uri, lName, qName, attrs);
         String eName = ("".equals(lName) ? qName : lName);
 
