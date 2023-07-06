@@ -21,7 +21,7 @@ final class ConvertFloat extends DecimalConverter {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public Float readImpl(Object value) {
-        LOGGER.trace("ConvertFload.readImpl");
+        LOGGER.trace("ConvertFloat.readImpl");
         Float returnValue = null;
         if (value instanceof Long) {
             returnValue = ((Long) value).floatValue();
@@ -32,7 +32,7 @@ final class ConvertFloat extends DecimalConverter {
     }
 
     protected Format parseFormatImpl(String formatPattern) {
-        LOGGER.trace("ConvertFload.parseFormatImpl");
+        LOGGER.trace("ConvertFloat.parseFormatImpl");
         DecimalFormat decimalFormat = new DecimalFormat(formatPattern);
         decimalFormat.setParseBigDecimal(false);
         decimalFormat.setParseIntegerOnly(false);
