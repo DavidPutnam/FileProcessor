@@ -43,8 +43,8 @@ abstract class DataFileBase implements DataFileParser {
             if (record.getSameAs() != null) {
                 DataFileRecord referenced = validated.get(record.getSameAs());
                 if (referenced == null) {
-                    throw new FileParserException("DataFileRecord '" + record.getId() + "' references record '"
-                            + record.getSameAs() + "' which does not exist.");
+                    throw new FileParserException("Record '" + record.getId() + "' references record '" + record.getSameAs()
+                            + "' which does not exist.");
                 } else {
                     validated.put(record.getId(), referenced);
                 }

@@ -96,9 +96,9 @@ final class SaxFileSpecificationHandler extends DefaultHandler {
             datafileParser.addRecord(currentRecord.getId(), currentRecord);
         } else if (ATTRIBUTE.equalsIgnoreCase(eName)) {
             if (currentRecord == null) {
-                throw new SAXException("Invalid sequence of elements, Attribute must follow DataFileRecord.");
+                throw new SAXException("Invalid sequence of elements, " + ATTRIBUTE + " must follow " + RECORD + ".");
             } else if (currentRecord.getSameAs() != null) {
-                throw new SAXException("Records identified with sameAs cannot have Attributes.");
+                throw new SAXException(RECORD + "s identified with sameAs cannot have " + ATTRIBUTE + "s.");
             } else {
                 switch (parserType) {
                     case FIXED_TYPE:

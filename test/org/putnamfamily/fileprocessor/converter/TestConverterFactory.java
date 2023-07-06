@@ -89,8 +89,7 @@ public class TestConverterFactory {
         try {
             ef.register(null, BaseConverter.class);
         } catch (ConverterException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("Must provide both the class and converter to register."));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Must provide both the class and converter to register."));
         }
     }
 
@@ -100,8 +99,7 @@ public class TestConverterFactory {
         try {
             ef.register(Class.class, null);
         } catch (ConverterException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("Must provide both the class and converter to register."));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Must provide both the class and converter to register."));
         }
     }
 
@@ -121,8 +119,7 @@ public class TestConverterFactory {
         try {
             ef.register(null, null);
         } catch (ConverterException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("Must provide both the class and converter to register."));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Must provide both the class and converter to register."));
         }
     }
 
@@ -159,7 +156,7 @@ public class TestConverterFactory {
     public void testAbstractconverter() {
         ConverterFactory ef = ConverterFactory.getInstance();
         try {
-            ef.register(Class.class, AbstractConverter.class);
+            ef.register(Class.class, BaseConverter.class);
         } catch (ConverterException ex) {
             fail(ex.getMessage());
         }

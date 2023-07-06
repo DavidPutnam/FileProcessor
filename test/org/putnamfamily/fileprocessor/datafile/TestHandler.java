@@ -68,11 +68,11 @@ public class TestHandler {
             String datafilevalue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                     + "<!DOCTYPE File SYSTEM \"config/filespecification.dtd\">\n"
                     + "<File type=\"fixed\" idBegin=\"1\" idLength=\"6\">\n"
-                    + "   <DataFileRecord id=\"RTR001\" firstOfSet=\"true\" targetClassName=\"org.putnamfamily.fileprocessor.domain.TestingClass\">\n"
+                    + "   <Record id=\"RTR001\" firstOfSet=\"true\" targetClassName=\"org.putnamfamily.fileprocessor.domain.TestingClass\">\n"
                     + "      <Attribute begin=\"1\" length=\"3\" name=\"recordType\"/>\n"
                     + "      <Attribute begin=\"4\" length=\"3\" name=\"sequenceNumber\"/>\n"
                     + "      <Attribute begin=\"7\" length=\"15\" name=\"fileType\"/>\n"
-                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </DataFileRecord>\n" + "</File>";
+                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </Record>\n" + "</File>";
             InputSource is = new InputSource(new StringReader(datafilevalue));
             saxParser.parse(is, handler);
         } catch (SAXException ex) {
