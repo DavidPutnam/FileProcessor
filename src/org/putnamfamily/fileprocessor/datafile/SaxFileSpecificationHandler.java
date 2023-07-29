@@ -81,7 +81,7 @@ final class SaxFileSpecificationHandler extends DefaultHandler {
             // get the required type element to determine fixed or deliminated
             String type = attrs.getValue(TYPE);
             if (FIXED.equalsIgnoreCase(type)) {
-                // fix field file, get attributes required for this type.
+                // fixed field file, get attributes required for this type.
                 parserType = FIXED_TYPE;
                 createFixedParser(attrs);
             } else if (DELIMINATED.equalsIgnoreCase(type)) {
