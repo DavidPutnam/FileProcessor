@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE File SYSTEM "filespecification.dtd">
+<File type="deliminated" idField="1" deliminator=";">
+	<Record id="Account" firstOfSet="true" required="true" targetClassName="org.putnamfamily.fileprocessor.delim.Account">
+		<Attribute name="account" field="1"/>
+		<Attribute name="registration1" field="2"/>
+		<Attribute name="registration2" field="3"/>
+		<Attribute name="registration3" field="4"/>
+	</Record>
+</File>
