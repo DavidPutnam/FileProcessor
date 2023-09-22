@@ -53,14 +53,25 @@ abstract class DataFileBase implements DataFileParser {
 
         // replace the record set with the validated one.
         records = validated;
-        LOGGER.debug("Datafile Initialized.");
+        LOGGER.debug("DataFileParser Initialized.");
     }
 
     protected final void addRecord(String id, DataFileRecord record) {
         this.records.put(id, record);
     }
 
-    protected final DataFileRecord getRecord(String id) {
-        return records.get(id);
+     public void assignAttributes(Object target, String wholeLine) throws FileParserException {
+        DataFileRecord record = records.get(getRecordId(wholeLine));
+        record.assignValues(target, wholeLine);
+    }
+
+    public Object createInstance(String wholeLine) throws FileParserException {
+        DataFileRecord record = records.get(getRecordId(wholeLine));
+        return record.createInstance();
+    }
+
+    public boolean isFirstOfSet(String wholeLine) throws FileParserException {
+        DataFileRecord record = records.get(getRecordId(wholeLine));
+        return record.isFirstOfSet();
     }
 }

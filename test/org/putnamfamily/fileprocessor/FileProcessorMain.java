@@ -45,6 +45,7 @@ public class FileProcessorMain {
             FileProcessorMain application = initialize(args);
             if (application != null) {
                 application.run();
+                application.shutdown();
             } else {
                 throw new Exception("Unable to initialize application: " + FileProcessorMain.class.getName());
             }
@@ -104,23 +105,17 @@ public class FileProcessorMain {
     }
 
     public void run() throws IOException {
-        BufferedReader reader = getDataFile();
-
-        int recNum = 0;
         int objectNum = 0;
         Object target = null;
-        String line = reader.readLine();
+        String line = getDataFile().readLine();
+        int recNum = 1;
         while (line != null) {
             if (recNum % PROGRESS_INTERVAL == 0) {
                 LOGGER.info(recNum + " records read.");
             }
-
             try {
                 if (getParser().isFirstOfSet(line)) {
-                    // this record is the first of a multiple part set,
-                    // or the only record necessary to create the target.
-
-                    // store the last object into the database
+                    // this record begins a new target, so store the last object
                     if (target != null) {
                         objectNum++;
                         getExecuteQueue().execute(new StoreObject("theManager", target));
@@ -133,25 +128,26 @@ public class FileProcessorMain {
                 LOGGER.error(
                     "Error on line " + recNum + " beginning with: '" + line.substring(0, Math.min(20, line.length())) + "'.", ex);
             }
-
             // get the next line
-            line = reader.readLine();
+            line = getDataFile().readLine();
             recNum++;
         }
+        // report final status
+        if (recNum % PROGRESS_INTERVAL != 0) {
+            LOGGER.info(recNum + " records read.");
+        }
+
         // store the last object into the database
         if (target != null) {
             objectNum++;
             getExecuteQueue().execute(new StoreObject("theManager", target));
         }
-
-        // close the input file and report final status
-        reader.close();
-        if (recNum % PROGRESS_INTERVAL != 0) {
-            LOGGER.info(recNum + " records read.");
-        }
         LOGGER.info("File reading complete. {} object(s) stored.", objectNum);
+    }
 
-        // shut down the executor queue
+    public void shutdown() throws IOException {
+        // close the input file and shut down the executor queue
+        getDataFile().close();
         getExecuteQueue().shutdown();
         try {
             getExecuteQueue().awaitTermination(THREAD_POOL_WAIT, TimeUnit.SECONDS);

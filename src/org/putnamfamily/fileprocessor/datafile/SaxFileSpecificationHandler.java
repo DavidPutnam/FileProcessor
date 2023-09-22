@@ -173,8 +173,7 @@ final class SaxFileSpecificationHandler extends DefaultHandler {
         } catch (NumberFormatException ex) {
             throw new SAXException("Invalid data in File element.", ex);
         }
-        // todo - create delim datafile
-        //datafileParser = new DelimitedDataFile(idField, deliminator);
+        datafileParser = new DelimitedDataFile(deliminator, idField);
         throw new SAXException(
             "Unsupported Deliminated DataFileParser with idField: '" + idField + "' and deliminator: '" + deliminator + "'");
     }

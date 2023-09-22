@@ -122,7 +122,7 @@ public class TestFixedFieldAttribute {
     }
 
     @Test
-    public void testBLankName() {
+    public void testBlankName() {
         // initialization steps
         FixedFieldAttribute attribute = new FixedFieldAttribute("", null, 1, 4, 2);
         try {
@@ -455,7 +455,50 @@ public class TestFixedFieldAttribute {
     }
 
     @Test
-    public void testWrite() {
+    public void testEqualsSame() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        assertTrue("attribute1.equals(attribute1)", attribute1.equals(attribute1));
+    }
+
+    @Test
+    public void testNotEqualsNull() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        assertTrue("attribute1.equals(null)", !attribute1.equals(null));
+    }
+
+    @Test
+    public void testNotEqualsClassDiff() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        DeliminatedAttribute attribute2 = new DeliminatedAttribute("privateInt", "", ';', 1, '.');
+        assertTrue("attribute1.equals(attribute2)", !attribute1.equals(attribute2));
+    }
+
+    @Test
+    public void testNotEqualsBegin() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        FixedFieldAttribute attribute2 = new FixedFieldAttribute("privateInt", null, 2, 7, 0);
+        assertTrue("attribute1.equals(attribute2)", !attribute1.equals(attribute2));
+        assertTrue("attribute2.equals(attribute1)", !attribute2.equals(attribute1));
+    }
+
+    @Test
+    public void testNotEqualsLength() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        FixedFieldAttribute attribute2 = new FixedFieldAttribute("privateInt", null, 1, 8, 0);
+        assertTrue("attribute1.equals(attribute2)", !attribute1.equals(attribute2));
+        assertTrue("attribute2.equals(attribute1)", !attribute2.equals(attribute1));
+    }
+
+    @Test
+    public void testNotEqualsSublength() {
+        FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
+        FixedFieldAttribute attribute2 = new FixedFieldAttribute("privateInt", null, 1, 7, 1);
+        assertTrue("attribute1.equals(attribute2)", !attribute1.equals(attribute2));
+        assertTrue("attribute2.equals(attribute1)", !attribute2.equals(attribute1));
+    }
+
+    @Test
+    public void testWriteNull() {
         String expected = "    ";
         FixedFieldAttribute attribute = new FixedFieldAttribute("attribute", null, 1, 4, 0);
         try {
@@ -465,4 +508,91 @@ public class TestFixedFieldAttribute {
             fail(ex.getMessage());
         }
     }
+
+    @Test
+    public void testWriteString() {
+        // initialization steps
+        FixedFieldAttribute attribute = new FixedFieldAttribute("attribute", null, 7, 4, 0);
+        try {
+            // The initialize class would come from the record data.
+            attribute.initialize(TestingClass.class);
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        // utilization steps
+        TestingClass testingClass = new TestingClass();
+        testingClass.setAttribute("7890");
+
+        // verification steps
+        String expected = "7890";
+        try {
+            assertEquals(expected, attribute.writeValue(testingClass));
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+
+    @Test
+    public void testWriteShort() {
+        // initialization steps
+        FixedFieldAttribute attribute = new FixedFieldAttribute("attribute", null, 7, 4, 0);
+        try {
+            // The initialize class would come from the record data.
+            attribute.initialize(TestingClass.class);
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        // utilization steps
+        TestingClass testingClass = new TestingClass();
+        testingClass.setAttribute("789");
+
+        // verification steps
+        String expected = " 789";
+        try {
+            assertEquals(expected, attribute.writeValue(testingClass));
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testWriteLong() {
+        // initialization steps
+        FixedFieldAttribute attribute = new FixedFieldAttribute("attribute", null, 7, 4, 0);
+        try {
+            // The initialize class would come from the record data.
+            attribute.initialize(TestingClass.class);
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        // utilization steps
+        TestingClass testingClass = new TestingClass();
+        testingClass.setAttribute("78910");
+
+        // verification steps
+        @SuppressWarnings("unused")
+        String expected;
+        try {
+            expected = attribute.writeValue(testingClass);
+        } catch (FileParserException ex) {
+            assertEquals("Field value does not fit in fixed field.", ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testWriteNullDirect() {
+        FixedFieldAttribute attribute = new FixedFieldAttribute("attribute", null, 7, 4, 0);
+        @SuppressWarnings("unused")
+        String expected;
+        try {
+            expected = attribute.writeAttribute(null);
+        } catch (FileParserException ex) {
+            assertEquals("Unable to write null value.", ex.getMessage());
+        }
+    }
+
 }

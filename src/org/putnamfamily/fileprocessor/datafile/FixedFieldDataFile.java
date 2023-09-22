@@ -24,40 +24,8 @@ final class FixedFieldDataFile extends DataFileBase {
         this.idLength = idLength;
     }
 
-    private DataFileRecord findRecord(String wholeLine) throws FileParserException {
-        // get the line name and find it in the map.
-        String recordId = FixedFieldAttribute.convertField(wholeLine, idBegin, idLength);
-        DataFileRecord record = getRecord(recordId);
-        if (record != null && record.getSameAs() != null) {
-            recordId = record.getSameAs();
-            record = getRecord(recordId);
-        }
-
-        if (record == null) {
-            throw new FileParserException("Unknown record id. " + recordId);
-        }
-        return record;
-    }
-
-    public void assignAttributes(Object target, String wholeLine) throws FileParserException {
-        LOGGER.trace("FixedFieldDataFile.assignAttributes");
-        DataFileRecord record = findRecord(wholeLine);
-        record.assignValues(target, wholeLine);
-    }
-
-    public Object createInstance(String wholeLine) throws FileParserException {
-        DataFileRecord record = findRecord(wholeLine);
-        return record.createInstance();
-    }
-
-    public boolean isFirstOfSet(String wholeLine) throws FileParserException {
-        DataFileRecord record = findRecord(wholeLine);
-        return record.isFirstOfSet();
-    }
-
     public String getRecordId(String wholeLine) throws FileParserException {
-        DataFileRecord record = findRecord(wholeLine);
-        return record.getId();
+        return FixedFieldAttribute.convertField(wholeLine, idBegin, idLength);
     }
 
     protected void validateArgs() throws FileParserException {

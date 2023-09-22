@@ -1,6 +1,8 @@
 
 package org.putnamfamily.fileprocessor.datafile;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,25 +26,40 @@ final class DelimitedDataFile extends DataFileBase {
         this.keyField = keyField;
     }
 
+    public String getRecordId(String wholeLine) throws FileParserException {
+        List<String> fields = DelimitedDataParser.getFieldsFromLine(delimitor, '"', '\\', wholeLine);
+        return fields.get(keyField);
+    }
+
     protected void validateArgs() throws FileParserException {
         LOGGER.trace("DelimitedDataFile.validateArgs");
-        //To change body of implemented methods use File | Settings | File Templates.
+        // validate delimitor
+        if (getKeyField() <= 0) {
+            String message = "keyField must be greater than 0. '" + getKeyField() + "'. ";
+            LOGGER.error(message);
+            throw new IllegalArgumentException(message);
+        }
+        //        for (String id : getRecords().keySet()) {
+        //            if (id.length() != getIdLength()) {
+        //                log.warn("record id '" + id + "' is not " + getIdLength() + " characters long.");
+        //            }
+        //        }
     }
 
-    public boolean isFirstOfSet(String line) throws FileParserException {
-        return false; //To change body of implemented methods use File | Settings | File Templates.
+    public char getDelimitor() {
+        return delimitor;
     }
 
-    public String getRecordId(String line) throws FileParserException {
-        return null; //To change body of implemented methods use File | Settings | File Templates.
+    public void setDelimitor(char delimitor) {
+        this.delimitor = delimitor;
     }
 
-    public Object createInstance(String line) throws FileParserException {
-        return null; //To change body of implemented methods use File | Settings | File Templates.
+    public int getKeyField() {
+        return keyField;
     }
 
-    public void assignAttributes(Object target, String line) throws FileParserException {
-        LOGGER.trace("DelimitedDataFile.assignAttributes");
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void setKeyField(int keyField) {
+        this.keyField = keyField;
     }
+    
 }
