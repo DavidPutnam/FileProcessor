@@ -133,6 +133,7 @@ abstract class Attribute implements Comparable<Attribute> {
             LOGGER.debug("No setMethod for attribute: " + getName() + " in Class: " + target.getName());
             // saveMethod will be null because no match occurred.
         } else if (count > 1) {
+            // there could be more than one because the argument types may differ
             throw new FileParserException("Non-distinct setMethod for attribute: " + getName());
         }
         setMethod = saveMethod;
@@ -157,7 +158,7 @@ abstract class Attribute implements Comparable<Attribute> {
         int count = 0;
         Method saveMethod = null;
         for (Method method : target.getMethods()) {
-            // Look for set methods with exactly one argument.
+            // Look for get methods with no argument.
             if (getterName.equals(method.getName()) && method.getParameterTypes().length == 0) {
                 saveMethod = method;
                 count++;
@@ -167,6 +168,7 @@ abstract class Attribute implements Comparable<Attribute> {
             LOGGER.debug("No getMethod for attribute: " + getName() + " in Class: " + target.getName());
             // saveMethod will be null because no match occurred.
         } else if (count > 1) {
+            // count cannot be greater than 1 because return type is not part of the signature
             throw new FileParserException("Non-distinct getMethod for attribute: " + getName());
         }
         getMethod = saveMethod;

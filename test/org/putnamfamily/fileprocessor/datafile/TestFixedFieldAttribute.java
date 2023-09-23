@@ -116,8 +116,7 @@ public class TestFixedFieldAttribute {
         } catch (FileParserException ex) {
             fail(ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("Field length not multiple of array element length."));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Field length not multiple of array element length."));
         }
     }
 
@@ -466,6 +465,7 @@ public class TestFixedFieldAttribute {
         assertTrue("attribute1.equals(null)", !attribute1.equals(null));
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testNotEqualsClassDiff() {
         FixedFieldAttribute attribute1 = new FixedFieldAttribute("privateInt", null, 1, 7, 0);
@@ -533,6 +533,29 @@ public class TestFixedFieldAttribute {
         }
     }
 
+    @Test
+    public void testWriteInt() {
+        // initialization steps
+        FixedFieldAttribute attribute = new FixedFieldAttribute("publicInt", null, 7, 4, 0);
+        try {
+            // The initialize class would come from the record data.
+            attribute.initialize(TestingClass.class);
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        // utilization steps
+        TestingClass testingClass = new TestingClass();
+        testingClass.publicInt = 7890;
+
+        // verification steps
+        String expected = "7890";
+        try {
+            assertEquals(expected, attribute.writeValue(testingClass));
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+    }
 
     @Test
     public void testWriteShort() {
@@ -595,4 +618,16 @@ public class TestFixedFieldAttribute {
         }
     }
 
+    @Test
+    public void testMultiArgSetter() {
+        // initialization steps
+        FixedFieldAttribute attribute = new FixedFieldAttribute("multiSetInt", null, 1, 7, 0);
+        try {
+            attribute.initialize(TestingClass.class);
+        } catch (FileParserException ex) {
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Non-distinct setMethod for attribute:"));
+            return;
+        }
+        fail("Non-distinct setMethods should exist for multiSetInt.");
+    }
 }

@@ -18,6 +18,7 @@ public class TestingClass {
     private String attribute;
     private String[] manyAttribs;
     private int intValue;
+    private int multiSetInt;
     //private int nonexistent; this variable must not exist.
     private Date dateValue;
     private double _double;
@@ -94,4 +95,28 @@ public class TestingClass {
     private void setPrivateInt(int privateInt) {
         this.privateInt = privateInt;
     }
+
+    public void setMultiSetInt(int multiSetInt) {
+        this.multiSetInt = multiSetInt;
+    }
+
+    public void setMultiSetInt(long multiSetInt) {
+        this.multiSetInt = (int) multiSetInt;
+    }
+
+    public int getMultiSetInt() {
+        return multiSetInt;
+    }
+
+    public void setMultiSetInt(int multiSetInt, int extraArg) {
+        this.multiSetInt = multiSetInt;
+    }
+
+    public int getMultiSetInt(int extraArg) {
+        return multiSetInt;
+    }
+
+    //public long getMultiSetInt() {
+    //    return (long) multiSetInt;
+    //}
 }

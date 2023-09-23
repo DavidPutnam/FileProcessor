@@ -2,6 +2,7 @@
 package org.putnamfamily.fileprocessor.datafile;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -89,6 +90,7 @@ public class TestSaxHandler {
         String line = "RTR001FINANCIALDIRECT000000027";
         TestingClass trailer = null;
         try {
+            assertTrue(parser.isFirstOfSet(line));
             trailer = (TestingClass) parser.createInstance(line);
             parser.assignAttributes(trailer, line);
         } catch (FileParserException ex) {
@@ -114,10 +116,8 @@ public class TestSaxHandler {
                     + "      <Attribute begin=\"1\" length=\"3\" name=\"recordType\"/>\n"
                     + "      <Attribute begin=\"4\" length=\"3\" name=\"sequenceNumber\"/>\n"
                     + "      <Attribute begin=\"7\" length=\"15\" name=\"fileType\"/>\n"
-                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n"
-                    + "   </Record>\n"
-                    + "   <Record id=\"RTM001\" sameAs=\"RTR001\"/>"
-                    + "</File>";
+                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </Record>\n"
+                    + "   <Record id=\"RTM001\" sameAs=\"RTR001\"/>" + "</File>";
             InputSource is = new InputSource(new StringReader(datafilevalue));
             saxParser.parse(is, handler);
         } catch (SAXException ex) {
@@ -159,10 +159,8 @@ public class TestSaxHandler {
                     + "      <Attribute begin=\"1\" length=\"3\" name=\"recordType\"/>\n"
                     + "      <Attribute begin=\"4\" length=\"3\" name=\"sequenceNumber\"/>\n"
                     + "      <Attribute begin=\"7\" length=\"15\" name=\"fileType\"/>\n"
-                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n"
-                    + "   </Record>\n"
-                    + "   <Record id=\"RTM001\" sameAs=\"RTX001\"/>"
-                    + "</File>";
+                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </Record>\n"
+                    + "   <Record id=\"RTM001\" sameAs=\"RTX001\"/>" + "</File>";
             InputSource is = new InputSource(new StringReader(datafilevalue));
             saxParser.parse(is, handler);
         } catch (SAXException ex) {
