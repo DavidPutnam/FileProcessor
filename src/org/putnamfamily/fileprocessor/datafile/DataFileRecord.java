@@ -98,8 +98,8 @@ final class DataFileRecord {
             throw new FileParserException("assignValues invoked without being initialized.");
         }
         if (!targetClass.equals(target.getClass())) {
-            throw new FileParserException("Target class missmatch, meant to assign values on '" + targetClass.getName()
-                    + "' not '" + target.getClass().getName() + "' for record: " + getId() + ".");
+            throw new FileParserException("Target class missmatch, meant to assign values on '" + targetClass.getName() + "' not '"
+                    + target.getClass().getName() + "' for record: " + getId() + ".");
         }
 
         // have each attribute assign its value to the target.
@@ -137,8 +137,7 @@ final class DataFileRecord {
             ClassLoader cl = DataFileRecord.class.getClassLoader();
             targetClass = cl.loadClass(getTargetClassName());
         } catch (ClassNotFoundException ex) {
-            throw new FileParserException("Cannot load class: '" + getTargetClassName() + "' for record: " + getId(),
-                ex);
+            throw new FileParserException("Cannot load class: '" + getTargetClassName() + "' for record: " + getId(), ex);
         }
 
         // Initialize all of the attributes on this record, if any.
@@ -173,47 +172,23 @@ final class DataFileRecord {
         return attributes;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
-
     public boolean isFirstOfSet() {
         return firstOfSet;
-    }
-
-    public void setFirstOfSet(boolean firstOfSet) {
-        this.firstOfSet = firstOfSet;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getSameAs() {
         return sameAs;
-    }
-
-    public void setSameAs(String sameAs) {
-        this.sameAs = sameAs;
     }
 
     public String getTargetClassName() {
         return targetClassName;
     }
 
-    public void setTargetClassName(String targetClassName) {
-        this.targetClassName = targetClassName;
-    }
-
     public boolean isRequired() {
         return this.required;
-    }
-
-    public void setRequred(boolean required) {
-        this.required = required;
     }
 }

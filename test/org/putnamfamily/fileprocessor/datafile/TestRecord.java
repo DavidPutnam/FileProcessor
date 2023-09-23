@@ -121,8 +121,7 @@ public class TestRecord {
             record.createInstance();
             fail("Execption Expected.");
         } catch (FileParserException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("createInstance invoked without being initialized."));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("createInstance invoked without being initialized."));
         }
     }
 
@@ -217,8 +216,7 @@ public class TestRecord {
             record.assignValues(received, "AMP0017890123420061009");
             fail("Execption Expected.");
         } catch (FileParserException ex) {
-            assertTrue(ex.getMessage(),
-                ex.getMessage().startsWith("Target class missmatch, meant to assign values on"));
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("Target class missmatch, meant to assign values on"));
         }
     }
 
@@ -282,8 +280,8 @@ public class TestRecord {
         } catch (FileParserException ex) {
             fail(ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            assertTrue(ex.getMessage(), ex.getMessage().startsWith(
-                "Either targetClassName or sameAs must be set, and are mutually exclusive."));
+            assertTrue(ex.getMessage(),
+                ex.getMessage().startsWith("Either targetClassName or sameAs must be set, and are mutually exclusive."));
         }
     }
 
@@ -298,8 +296,8 @@ public class TestRecord {
         } catch (FileParserException ex) {
             fail(ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            assertTrue(ex.getMessage(), ex.getMessage().startsWith(
-                "Either targetClassName or sameAs must be set, and are mutually exclusive."));
+            assertTrue(ex.getMessage(),
+                ex.getMessage().startsWith("Either targetClassName or sameAs must be set, and are mutually exclusive."));
         }
     }
 
@@ -375,4 +373,30 @@ public class TestRecord {
     }
 
     //'Unable to create ' (InstantiationException IllegalAccessException)
+    @Test
+    public void testNoAttributes() {
+        // initialization steps
+        DataFileRecord record = new DataFileRecord("AMP001", "org.putnamfamily.fileprocessor.domain.TestingClass", true, true);
+
+        try {
+            record.initialize();
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        // utilization steps
+        Object received = null;
+        try {
+            if (record.isFirstOfSet()) {
+                received = record.createInstance();
+            }
+            record.assignValues(received, "AMP0017890123420061009");
+        } catch (FileParserException ex) {
+            fail(ex.getMessage());
+        }
+
+        if (received == null) {
+            fail("record.createInstance failed but did not throw an Exception or firstOfSet is false.");
+        }
+    }
 }

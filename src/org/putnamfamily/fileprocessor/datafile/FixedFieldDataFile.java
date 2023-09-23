@@ -34,12 +34,12 @@ final class FixedFieldDataFile extends DataFileBase {
         if (getIdBegin() <= 0) {
             String message = "idBegin must be greater than 0. '" + getIdBegin() + "'. ";
             LOGGER.error(message);
-            throw new IllegalArgumentException(message);
+            throw new FileParserException(message);
         }
         if (getIdLength() <= 0) {
             String message = "idLength must be greater than 0. '" + getIdLength() + "'. ";
             LOGGER.error(message);
-            throw new IllegalArgumentException(message);
+            throw new FileParserException(message);
         }
         //        for (String id : getRecords().keySet()) {
         //            if (id.length() != getIdLength()) {
@@ -52,15 +52,7 @@ final class FixedFieldDataFile extends DataFileBase {
         return idBegin;
     }
 
-    public void setIdBegin(int idBegin) {
-        this.idBegin = idBegin;
-    }
-
     public int getIdLength() {
         return idLength;
-    }
-
-    public void setIdLength(int idLength) {
-        this.idLength = idLength;
     }
 }

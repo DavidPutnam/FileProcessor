@@ -177,4 +177,68 @@ public class TestSaxHandler {
         }
         fail("RTM References sameAs RTX which should not exist.");
     }
+
+    @Test
+    public void testFixedBadBegin() {
+        // create our XML Handler
+        SaxFileSpecificationHandler handler = new SaxFileSpecificationHandler();
+
+        // parse the input.
+        try {
+            String datafilevalue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                    + "<!DOCTYPE File SYSTEM \"config/filespecification.dtd\">\n"
+                    + "<File type=\"fixed\" idBegin=\"0\" idLength=\"6\">\n"
+                    + "   <Record id=\"RTR001\" firstOfSet=\"true\" targetClassName=\"org.putnamfamily.fileprocessor.domain.TestingClass\">\n"
+                    + "      <Attribute begin=\"1\" length=\"3\" name=\"recordType\"/>\n"
+                    + "      <Attribute begin=\"4\" length=\"3\" name=\"sequenceNumber\"/>\n"
+                    + "      <Attribute begin=\"7\" length=\"15\" name=\"fileType\"/>\n"
+                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </Record>\n" + "</File>";
+            InputSource is = new InputSource(new StringReader(datafilevalue));
+            saxParser.parse(is, handler);
+        } catch (SAXException ex) {
+            fail(ex.getMessage());
+        } catch (IOException ex) {
+            fail(ex.getMessage());
+        }
+        DataFileBase parser = handler.getParser();
+        try {
+            parser.initialize();
+        } catch (FileParserException ex) {
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("idBegin must be greater than 0."));
+            return;
+        }
+        fail("Bad idBegin value should have been an exception.");
+    }
+
+    @Test
+    public void testFixedBadLength() {
+        // create our XML Handler
+        SaxFileSpecificationHandler handler = new SaxFileSpecificationHandler();
+
+        // parse the input.
+        try {
+            String datafilevalue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                    + "<!DOCTYPE File SYSTEM \"config/filespecification.dtd\">\n"
+                    + "<File type=\"fixed\" idBegin=\"1\" idLength=\"0\">\n"
+                    + "   <Record id=\"RTR001\" firstOfSet=\"true\" targetClassName=\"org.putnamfamily.fileprocessor.domain.TestingClass\">\n"
+                    + "      <Attribute begin=\"1\" length=\"3\" name=\"recordType\"/>\n"
+                    + "      <Attribute begin=\"4\" length=\"3\" name=\"sequenceNumber\"/>\n"
+                    + "      <Attribute begin=\"7\" length=\"15\" name=\"fileType\"/>\n"
+                    + "      <Attribute begin=\"22\" length=\"9\" name=\"intValue\"/>\n" + "   </Record>\n" + "</File>";
+            InputSource is = new InputSource(new StringReader(datafilevalue));
+            saxParser.parse(is, handler);
+        } catch (SAXException ex) {
+            fail(ex.getMessage());
+        } catch (IOException ex) {
+            fail(ex.getMessage());
+        }
+        DataFileBase parser = handler.getParser();
+        try {
+            parser.initialize();
+        } catch (FileParserException ex) {
+            assertTrue(ex.getMessage(), ex.getMessage().startsWith("idLength must be greater than 0."));
+            return;
+        }
+        fail("Bad idLength value should have been an exception.");
+    }
 }
